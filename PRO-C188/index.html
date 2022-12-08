@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Jellyfish Catching</title>
+
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+  <script src="https://unpkg.com/aframe-physics-extras@0.1.2/dist/aframe-physics-extras.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+  <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+
+  <script src="js/jellyfish.js"></script>
+  <script src="js/gameplay.js"></script>
+  <script src="js/player.js"></script>
+</head>
+
+<body>
+  <a-scene id="scene" renderer="colorManagement: true;" inspector-plugin-recast physics="debug: false" collider>
+    <a-assets>
+      <a-asset-item id="net-gltf" src="./assets/jellyfish_net/scene.gltf"></a-asset-item>
+      <a-asset-item id="jellyfish-gltf" src="./assets/jellyfish/scene.gltf"></a-asset-item>
+
+      <audio id="swim-wav" src="./assets/sounds/swim.wav"></audio>
+    </a-assets>
+
+    <a-entity id="camera-rig" movement-controls="speed:0.4; constrainToNavMesh:true" position="0 -1 5" >
+      <a-entity id="camera" camera position="0 12 0"
+        look-controls="pointerLockEnabled: true">
+        <a-cursor></a-cursor>
+        <a-entity 
+          id="net" 
+          position=".75 -.5 -2" rotation="0 -45 0" 
+          scale=".005 .005 .005" gltf-model="#net-gltf"
+        ></a-entity>
+
+        <!--Text-->
+        <a-entity position="0 0 -1">
+          <a-entity 
+            position="0 .7 0"
+            text="
+              font:exo2bold; 
+              align:center; 
+              width:2; color:black; 
+              value: Catch 5 Jellyfishes !
+          "></a-entity>
+
+          <a-entity 
+            id="jellies" position="1.3 .68 0"
+            text="
+              font:exo2bold; 
+              align:center; 
+              width:3; color:black; 
+              value:5
+          "></a-entity>
+          <a-entity 
+            position="1.1 .66 0"
+            text="
+              font:aileronsemibold; 
+              align:center;
+              width:1; color:black; 
+              value:JELLYFISHES \n REMAINING
+          "></a-entity>
+
+          <a-entity 
+            id="timer" position="-1.2 .59 0"
+            text="
+              font:exo2bold; 
+              align:center; 
+              width:2; color:black; 
+              value: 00:00
+          "></a-entity>
+          <a-entity 
+            position="-1.2 0.67 0"
+            text="
+              font:aileronsemibold; 
+              align:center; 
+              width:1; 
+              color:black; 
+              value:TIME \n REMAINING
+          "></a-entity>
+
+        </a-entity>
+      </a-entity>
+    </a-entity>
+
+    <!--Environment-->
+
+    <!--Objects-->
+    <a-entity player-movement></a-entity>
+    <a-entity jellyfish></a-entity>
+
+    <a-box 
+      id="collider" 
+      position="0 10.5 5" rotation="-90 0 0" 
+      width="1" height="1" depth="10" 
+      dynamic-body="mass:0" gameplay
+    ></a-box>
+
+  </a-scene>
+</body>
+
+</html>
